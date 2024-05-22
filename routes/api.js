@@ -20,21 +20,22 @@ module.exports = function (app) {
 
   app.route('/api/issues/:project')
   
-    .get(async function (req, res){
-      let project = req.params.project;
-      try{
-        let query = req.query;
-        query.project_title = project;
+    .get(async function (req, res) {
+      try {
+        let project = req.params.project;
+        let query = { ...req.query, project_title: project };
+
         let project_lists = await Issue.find(query);
+
         return res.json(project_lists);
-      } catch(err) {
-        console.log(err)
-        return res.status(500).json({ 
-          error: `Project ${project} not found on the database`
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            error: `Project ${project} not found in the database`
         });
       }
     })
-    
+
     .post(async function (req, res){
       let project = req.params.project;
       try {
@@ -103,7 +104,7 @@ module.exports = function (app) {
         } = req.body;
     
         if (!_id) {
-          return res.json({ error: `Issue with id ${_id} not found` });
+          return res.json({ error: 'Please provide the ID' });
         }
     
         if (issue_title == undefined && 
@@ -161,7 +162,7 @@ module.exports = function (app) {
 
         if(_id == null){
           return res.json({ 
-            error: `Project id ${_id} not found`
+            error: `Please provide the ID`
           })
         }
 
@@ -169,13 +170,13 @@ module.exports = function (app) {
 
         if(id == null){
           return res.json({ 
-            error: 'Failed to delete id ${_id}, not found', 
+            error: `Issue id ${_id} not found`, 
             _id: _id
           });
         } else {
           let deleteIssue = await Issue.findByIdAndDelete(id._id)
-          return res.json({ 
-            result: `Project id ${_id} deleted successfully`,
+          return res.json({
+            result: `Issue id ${_id} deleted successfully`,
             _id: id._id
           })
         }
