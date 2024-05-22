@@ -18,13 +18,23 @@
 
 body {
   padding: 10px;
+  color: var(--white-bone);
+  background-color: var(--grey-darker);
+}
+
+textarea {
+  min-height: 150px;
+}
+
+.project-title {
+  display: flex;
+  justify-content: center;
 }
 
 .issue {
   margin: 20px;
   padding: 5px;
   width: 60%;
-  color: var(--white-bone);
   border: 2px solid var(--white-bone);
 }
 
