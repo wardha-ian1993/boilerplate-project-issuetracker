@@ -52,7 +52,7 @@ module.exports = function (app) {
          || !created_by
         ) {
           return res.json({
-            error: 'Missing required field(s), please try again'
+            error: 'required field(s) missing'
           })
         };
 
@@ -104,7 +104,7 @@ module.exports = function (app) {
         } = req.body;
     
         if (!_id) {
-          return res.json({ error: 'Please provide the ID' });
+          return res.json({ error: 'missing _id' });
         }
     
         if (issue_title == undefined && 
@@ -114,7 +114,7 @@ module.exports = function (app) {
             status_text == undefined && 
             open == undefined) {
           return res.json({ 
-            error: `No update fields provided for id ${_id}`,
+            error: `no update field(s) sent`,
             _id: _id 
           });
         }
@@ -137,13 +137,13 @@ module.exports = function (app) {
     
         if (!updatedIssue) {
           return res.json({
-            error: `Failed to update issue id ${_id}, not found`,
+            error: `could not update`,
             _id: _id
           });
         }
     
         return res.json({ 
-          result: `Issue id ${_id} is successfully updated`,
+          result: `successfully updated`,
           _id: _id 
         });
     
@@ -162,7 +162,7 @@ module.exports = function (app) {
 
         if(_id == null){
           return res.json({ 
-            error: `Please provide the ID`
+            error: `missing _id`
           })
         }
 
@@ -170,13 +170,13 @@ module.exports = function (app) {
 
         if(id == null){
           return res.json({ 
-            error: `Issue id ${_id} not found`, 
+            error: `could not delete`, 
             _id: _id
           });
         } else {
           let deleteIssue = await Issue.findByIdAndDelete(id._id)
           return res.json({
-            result: `Issue id ${_id} deleted successfully`,
+            result: `successfully deleted`,
             _id: id._id
           })
         }
@@ -184,7 +184,7 @@ module.exports = function (app) {
       catch(err){
         console.log(err);
         return res.status(500).json({ 
-          error: `Failed to delete Issue id ${_id}, not found`, 
+          error: `could not delete`, 
           _id: _id
         })
       }

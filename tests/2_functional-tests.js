@@ -56,7 +56,7 @@ suite('Functional Tests', function() {
         status_text: 'In Progress'
       })
       .end(function (err, res) {
-        assert.equal(res.body.error, 'Missing required field(s), please try again', 'Error message should indicate missing required fields');
+        assert.equal(res.body.error, 'required field(s) missing', 'Error message should indicate missing required fields');
         done();
       });
   });
@@ -110,7 +110,7 @@ suite('Functional Tests', function() {
         assert.equal(_id, id);
         assert.equal(
           result, 
-          `Issue id ${_id} is successfully updated`
+          `successfully updated`
         );
         done();
       });
@@ -132,7 +132,7 @@ suite('Functional Tests', function() {
         assert.equal(_id, id);
         assert.equal(
           result, 
-          `Issue id ${_id} is successfully updated`
+          `successfully updated`
         );
         done();
       });
@@ -150,8 +150,8 @@ suite('Functional Tests', function() {
       .end(function(err, res) {
         const { error } = res.body;
         assert.equal(
-          error, 
-          'Please provide the ID'
+          error,
+          'missing _id'
         );
         done();
       });
@@ -183,13 +183,13 @@ suite('Functional Tests', function() {
        })
       .end(function(err, res) {
         const { error, _id } = res.body;
-        assert.equal(error, `Failed to update issue id ${_id}, not found`)
+        assert.equal(error, `could not update`);
         assert.equal(_id, id);
         done();
       });
   });
   test('Delete an issue: DELETE request to /api/issues/{project}', function(done) {
-    const id = '664e49bfbfe928339abd598e'
+    const id = '664e4428b411da12a0dcc609'
     chai
       .request(server)
       .keepOpen()
@@ -199,14 +199,14 @@ suite('Functional Tests', function() {
         const { _id, result } = res.body;
         assert.equal(
           result,
-          `Issue id ${_id} deleted successfully`
+          `successfully deleted`
         );
         assert.equal(_id, id);
         done();
       });
   });
   test('Delete an issue with an invalid _id: DELETE request to /api/issues/{project}', function(done) {
-    const id = '664e431c527cc64f061c3c80'
+    const id = '664e43ccb00cc7b653abf4d4'
     chai
       .request(server)
       .keepOpen()
@@ -216,7 +216,7 @@ suite('Functional Tests', function() {
         const { _id, error } = res.body;
         assert.equal(
           error,
-          `Issue id ${id} not found`
+          `could not delete`
         );
         assert.equal(_id, id);
         done();
@@ -232,7 +232,7 @@ suite('Functional Tests', function() {
         const { error } = res.body;
         assert.equal(
           error,
-          'Please provide the ID'
+          'missing _id'
         );
         done();
       });
